@@ -28,6 +28,8 @@ int main(void)	{
 	setlocale(LC_ALL, "Portuguese");
 	system("color 0A");
 	
+	printf("--------Sistema Cadastro de Usúario-------\n\n");
+
 	int size;
 	
 	printf("Digite a quantidade de pessoas que você deseja cadastrar: ");
@@ -42,6 +44,8 @@ int main(void)	{
 }
 
 void exibirMenu(int size, Pessoa *pessoa) {
+	printf("--------Sistema Cadastro de Usúario-------\n\n");
+	
 	int input;
 	
 	printf("1. Exibir os dados\n2. Alterar dados cadastrados de um usuário\n3. Deletar usuário cadastrado\n4. Sair do programa\n\n");

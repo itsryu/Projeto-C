@@ -27,7 +27,6 @@ void limparTela();
 int main(void)	{
 	setlocale(LC_ALL, "Portuguese");
 	system("color 0A");
-	
 	system("title Sistema Cadastro de Usúario");
 	
 	printf("--------Sistema Cadastro de Usúario-------\n\n");
@@ -47,7 +46,7 @@ int main(void)	{
 
 void exibirMenu(int size, Pessoa *pessoa) {
 	printf("--------Sistema Cadastro de Usúario-------\n\n");
-	
+
 	int input;
 	
 	printf("1. Exibir os dados\n2. Alterar dados cadastrados de um usuário\n3. Deletar usuário cadastrado\n4. Sair do programa\n\n");

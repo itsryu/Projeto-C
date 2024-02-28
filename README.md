@@ -1,4 +1,4 @@
-# Projeto Nivelamento em C
+# Projeto de Nivelamento em C
 
 Programa para cadastrar usuários em um sistema utilizando a linguagem C.
 

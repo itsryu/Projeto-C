@@ -2,38 +2,39 @@
 #include <stdlib.h>
 #include <locale.h>
 
-typedef struct Nascimento {
+typedef struct {
 	int dia;
 	int mes;
 	int ano;
 } Nascimento;
 
-typedef struct Pessoa {
+typedef struct {
 	char nome[256];
 	char CPF[12];
 	char address[256];
 	Nascimento nascimento;
 } Pessoa;
 
+void exibirMenu(int size, Pessoa *pessoa);
 void cadastrarUsuarios(int size, Pessoa *pessoa);
 void exibirDados(int size, Pessoa *pessoa);
-void exibirMenu(int size, Pessoa *pessoa);
 void alterarDados(int size, Pessoa *pessoa, int index);
 void deletarUsuario(int *size, Pessoa **pessoa, int index);
+void cadastrarNovoUsuario(int *size, Pessoa **pessoa);
 void voltarAoMenu(int size, Pessoa *pessoa);
 void encerrarPrograma();
 void limparTela();
 
-int main(void)	{
+int main(void) {
 	setlocale(LC_ALL, "Portuguese");
 	system("color 0A");
-	system("title Sistema Cadastro de Us√∫ario");
+	system("title Sistema Cadastro de Us˙ario");
 	
-	printf("--------Sistema Cadastro de Us√∫ario-------\n\n");
+	printf("--------Sistema Cadastro de Us˙ario-------\n\n");
 
 	int size;
 	
-	printf("Digite a quantidade de pessoas que voc√™ deseja cadastrar: ");
+	printf("Digite a quantidade de pessoas que vocÍ deseja cadastrar: ");
 	scanf("%d", &size);
 	
 	Pessoa *pessoa = (Pessoa *)malloc(size * sizeof(Pessoa));
@@ -45,16 +46,16 @@ int main(void)	{
 }
 
 void exibirMenu(int size, Pessoa *pessoa) {
-	printf("--------Sistema Cadastro de Us√∫ario-------\n\n");
+	printf("--------Sistema Cadastro de Us˙ario-------\n\n");
 
 	int input;
 	
-	printf("1. Exibir os dados\n2. Alterar dados cadastrados de um usu√°rio\n3. Deletar usu√°rio cadastrado\n4. Sair do programa\n\n");
-	printf("Escolha uma op√ß√£o: ");
+	printf("1. Exibir os dados\n2. Alterar dados cadastrados de um usu·rio\n3. Deletar usu·rio cadastrado\n4. Cadastrar novo usu·rio\n5. Sair do programa\n\n");
+	printf("Escolha uma opÁ„o: ");
 	scanf("%d", &input);
 
-	while(input < 1 || input > 4) {
-		printf("Op√ß√£o inv√°lida, tente novamente: ");
+	while(input < 1 || input > 5) {
+		printf("OpÁ„o inv·lida, tente novamente: ");
 		scanf("%d", &input);
 	}
 
@@ -66,11 +67,11 @@ void exibirMenu(int size, Pessoa *pessoa) {
 		case 2: {
 			int input;
 			
-			printf("Qual usu√°rio voc√™ deseja alterar: ");
+			printf("Qual usu·rio vocÍ deseja alterar: ");
 			scanf("%d", &input);
 			
 			while(input <= 0 || input > size) {
-				printf("Usu√°rio inv√°lido, tente novamente: ");
+				printf("Usu·rio inv·lido, tente novamente: ");
 				scanf("%d", &input);
 			}
 			
@@ -80,11 +81,11 @@ void exibirMenu(int size, Pessoa *pessoa) {
 		case 3: {
 			int input;
 			
-			printf("Qual usu√°rio voc√™ deseja deletar: ");
+			printf("Qual usu·rio vocÍ deseja deletar: ");
 			scanf("%d", &input);
 			
 			while(input <= 0 || input > size) {
-				printf("Usu√°rio inv√°lido, tente novamente: ");
+				printf("Usu·rio inv·lido, tente novamente: ");
 				scanf("%d", &input);
 			}
 			
@@ -92,6 +93,10 @@ void exibirMenu(int size, Pessoa *pessoa) {
 			break;
 		}
 		case 4: {
+			cadastrarNovoUsuario(&size, &pessoa);
+			break;
+		}
+		case 5: {
 			encerrarPrograma();
 			break;
 		}
@@ -103,26 +108,82 @@ void cadastrarUsuarios(int size, Pessoa *pessoa) {
 		printf("\n");
 		
 		// Nome: 
-		printf("Digite o nome da %d¬∫ pessoa: ", i + 1);
+		printf("Digite o nome do %d∫ usu·rio: ", i + 1);
 		fflush(stdin);
 		scanf("%[^\n]s", &pessoa[i].nome);
 		
 		// Data de nascimento: 
-		printf("Digite a data de nascimento de %s: ", pessoa[i].nome);
+		printf("Digite a data de nascimento de %s (DD/MM/AAAA): ", pessoa[i].nome);
 		scanf("%d/%d/%d", &pessoa[i].nascimento.dia, &pessoa[i].nascimento.mes, &pessoa[i].nascimento.ano);
 		
 		// CPF:
-		printf("Digite o CPF de %s: ", pessoa[i].nome);
+		printf("Digite o CPF de %s (Apenas n˙meros): ", pessoa[i].nome);
 		fflush(stdin);
 		scanf("%[^\n]s", &pessoa[i].CPF);
 		
-		// Endere√ßo:
-		printf("Digite o endere√ßo de %s: ", pessoa[i].nome);
+		// EndereÁo:
+		printf("Digite o endereÁo de %s: ", pessoa[i].nome);
 		fflush(stdin);
 		scanf("%[^\n]s", &pessoa[i].address);
 	}
 	
+	voltarAoMenu(size, pessoa);
+}
+
+void cadastrarNovoUsuario(int *size, Pessoa **pessoa) {
+	*size += 1;
+	
+	Pessoa *temp = (Pessoa *)malloc(*size * sizeof(Pessoa));
+	
+	for(int i = 0, j = 0; i < *size - 1; i++) {
+		temp[j++] = (*pessoa)[i];
+	}
+	
+	free(*pessoa);
+
 	printf("\n");
+	
+	// Nome: 
+	printf("Digite o nome do novo usu·rio: ", size);
+	fflush(stdin);
+	scanf("%[^\n]s", &temp[*size - 1].nome);
+	
+	// Data de nascimento: 
+	printf("Digite a data de nascimento de %s (DD/MM/AAAA): ", temp[*size - 1].nome);
+	scanf("%d/%d/%d", &temp[*size - 1].nascimento.dia, &temp[*size - 1].nascimento.mes, &temp[*size - 1].nascimento.ano);
+	
+	// CPF:
+	printf("Digite o CPF de %s (Apenas n˙meros): ", temp[*size - 1].nome);
+	fflush(stdin);
+	scanf("%[^\n]s", &temp[*size - 1].CPF);
+	
+	// EndereÁo:
+	printf("Digite o endereÁo de %s: ", temp[*size - 1].nome);
+	fflush(stdin);
+	scanf("%[^\n]s", &temp[*size - 1].address);
+	
+	int input;
+
+	printf("\n");
+	printf("1. Voltar ao menu\n2. Encerrar o programa\n\n");
+	printf("Escolha uma opÁ„o: ");
+	scanf("%d", &input);
+
+	while(input < 1 || input > 2) {
+		printf("OpÁ„o inv·lida, tente novamente: ");
+		scanf("%d", &input);
+	}
+
+	switch(input) {
+		case 1: {
+			voltarAoMenu(*size, temp);
+			break;
+		}
+		case 2: {
+			encerrarPrograma();
+			break;
+		}
+	}
 }
 
 void exibirDados(int size, Pessoa *pessoa) {
@@ -131,7 +192,7 @@ void exibirDados(int size, Pessoa *pessoa) {
 		
 		printf("\n");
 		
-		printf("USU√ÅRIO %d:\n", i + 1);
+		printf("USU¡RIO %d:\n", i + 1);
 		
 		// Nome: 
 		printf("Nome: %s\n", pessoa[i].nome);
@@ -142,8 +203,8 @@ void exibirDados(int size, Pessoa *pessoa) {
 		// CPF:
 		printf("CPF: %s\n", pessoa[i].CPF);
 		
-		// Endere√ßo:
-		printf("Endere√ßo: %s\n", pessoa[i].address);
+		// EndereÁo:
+		printf("EndereÁo: %s\n", pessoa[i].address);
 		
 		printf("\n");
 	}
@@ -152,11 +213,11 @@ void exibirDados(int size, Pessoa *pessoa) {
 
 	printf("\n");
 	printf("1. Voltar ao menu\n2. Encerrar o programa\n\n");
-	printf("Escolha uma op√ß√£o: ");
+	printf("Escolha uma opÁ„o: ");
 	scanf("%d", &input);
 
 	while(input < 1 || input > 2) {
-		printf("Op√ß√£o inv√°lida, tente novamente: ");
+		printf("OpÁ„o inv·lida, tente novamente: ");
 		scanf("%d", &input);
 	}
 
@@ -188,13 +249,13 @@ void deletarUsuario(int *size, Pessoa **pessoa, int index) {
 	int input;
 
 	printf("\n");
-	printf("Usu√°rio deletado com sucesso!\n");
+	printf("Usu·rio deletado com sucesso!\n");
 	printf("1. Voltar ao menu\n2. Encerrar o programa\n\n");
-	printf("Escolha uma op√ß√£o: ");
+	printf("Escolha uma opÁ„o: ");
 	scanf("%d", &input);
 
 	while(input < 1 || input > 2) {
-		printf("Op√ß√£o inv√°lida, tente novamente: ");
+		printf("OpÁ„o inv·lida, tente novamente: ");
 		scanf("%d", &input);
 	}
 
@@ -214,7 +275,7 @@ void alterarDados(int size, Pessoa *pessoa, int index) {
 	int i = index - 1;
 	
 	// Nome: 
-	printf("Digite o novo nome do usu√°rio %d: ", index);
+	printf("Digite o novo nome do usu·rio %d: ", index);
 	fflush(stdin);
 	scanf("%[^\n]s", &pessoa[i].nome);
 		
@@ -227,8 +288,8 @@ void alterarDados(int size, Pessoa *pessoa, int index) {
 	fflush(stdin);
 	scanf("%[^\n]s", &pessoa[i].CPF);
 		
-	// Endere√ßo:
-	printf("Digite o endere√ßo de %s: ", pessoa[i].nome);
+	// EndereÁo:
+	printf("Digite o endereÁo de %s: ", pessoa[i].nome);
 	fflush(stdin);
 	scanf("%[^\n]s", &pessoa[i].address);
 	
@@ -236,11 +297,11 @@ void alterarDados(int size, Pessoa *pessoa, int index) {
 
 	printf("\n");
 	printf("1. Voltar ao menu\n2. Encerrar o programa\n\n");
-	printf("Escolha uma op√ß√£o: ");
+	printf("Escolha uma opÁ„o: ");
 	scanf("%d", &input);
 
 	while(input < 1 || input > 2) {
-		printf("Op√ß√£o inv√°lida, tente novamente: ");
+		printf("OpÁ„o inv·lida, tente novamente: ");
 		scanf("%d", &input);
 	}
 

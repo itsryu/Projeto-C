@@ -28,6 +28,8 @@ int main(void)	{
 	setlocale(LC_ALL, "Portuguese");
 	system("color 0A");
 	
+	system("title Sistema Cadastro de Usúario");
+	
 	printf("--------Sistema Cadastro de Usúario-------\n\n");
 
 	int size;
